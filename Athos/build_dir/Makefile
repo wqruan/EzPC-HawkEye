@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wqruan/test_resmlp/EzPC/Athos/build_dir
+CMAKE_SOURCE_DIR = /home/wqruan/EzPC-HawkEye/Athos/build_dir
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wqruan/test_resmlp/EzPC/Athos/build_dir
+CMAKE_BINARY_DIR = /home/wqruan/EzPC-HawkEye/Athos/build_dir
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wqruan/test_resmlp/EzPC/Athos/build_dir/CMakeFiles /home/wqruan/test_resmlp/EzPC/Athos/build_dir//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wqruan/EzPC-HawkEye/Athos/build_dir/CMakeFiles /home/wqruan/EzPC-HawkEye/Athos/build_dir//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wqruan/test_resmlp/EzPC/Athos/build_dir/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wqruan/EzPC-HawkEye/Athos/build_dir/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named resmodel_SCI_OT.out
+
+# Build rule for target.
+resmodel_SCI_OT.out: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 resmodel_SCI_OT.out
+.PHONY : resmodel_SCI_OT.out
+
+# fast build rule for target.
+resmodel_SCI_OT.out/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/build
+.PHONY : resmodel_SCI_OT.out/fast
+
+#=============================================================================
 # Target rules for targets named densemodel_SCI_OT.out
 
 # Build rule for target.
@@ -129,29 +142,127 @@ densemodel_SCI_OT.out/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/build
 .PHONY : densemodel_SCI_OT.out/fast
 
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.o: home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.o
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.o
+#=============================================================================
+# Target rules for targets named shufflemodel_SCI_OT.out
+
+# Build rule for target.
+shufflemodel_SCI_OT.out: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 shufflemodel_SCI_OT.out
+.PHONY : shufflemodel_SCI_OT.out
+
+# fast build rule for target.
+shufflemodel_SCI_OT.out/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shufflemodel_SCI_OT.out.dir/build.make CMakeFiles/shufflemodel_SCI_OT.out.dir/build
+.PHONY : shufflemodel_SCI_OT.out/fast
+
+#=============================================================================
+# Target rules for targets named mobilemodel_SCI_OT.out
+
+# Build rule for target.
+mobilemodel_SCI_OT.out: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mobilemodel_SCI_OT.out
+.PHONY : mobilemodel_SCI_OT.out
+
+# fast build rule for target.
+mobilemodel_SCI_OT.out/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mobilemodel_SCI_OT.out.dir/build.make CMakeFiles/mobilemodel_SCI_OT.out.dir/build
+.PHONY : mobilemodel_SCI_OT.out/fast
+
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.o: home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.o
 
 # target to build an object file
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.o
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.o
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.o
 
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.i: home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.i
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.i
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.i: home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.i
 
 # target to preprocess a source file
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.i
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.i
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.i
 
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.s: home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.s
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.s
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.s: home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.s
 
 # target to generate assembly for a file
-home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.s
-.PHONY : home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.cpp.s
+home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.cpp.s
+
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.o: home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.o
+
+# target to build an object file
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mobilemodel_SCI_OT.out.dir/build.make CMakeFiles/mobilemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.o
+
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.i: home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.i
+
+# target to preprocess a source file
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mobilemodel_SCI_OT.out.dir/build.make CMakeFiles/mobilemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.i
+
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.s: home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.s
+
+# target to generate assembly for a file
+home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mobilemodel_SCI_OT.out.dir/build.make CMakeFiles/mobilemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.cpp.s
+
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.o: home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.o
+
+# target to build an object file
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.o
+
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.i: home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.i
+
+# target to preprocess a source file
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.i
+
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.s: home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.s
+
+# target to generate assembly for a file
+home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.cpp.s
+
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.o: home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.o
+
+# target to build an object file
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shufflemodel_SCI_OT.out.dir/build.make CMakeFiles/shufflemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.o
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.o
+
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.i: home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.i
+
+# target to preprocess a source file
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shufflemodel_SCI_OT.out.dir/build.make CMakeFiles/shufflemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.i
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.i
+
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.s: home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.s
+
+# target to generate assembly for a file
+home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shufflemodel_SCI_OT.out.dir/build.make CMakeFiles/shufflemodel_SCI_OT.out.dir/home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.s
+.PHONY : home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.cpp.s
 
 # Help Target
 help:
@@ -162,9 +273,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... densemodel_SCI_OT.out"
-	@echo "... home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.o"
-	@echo "... home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.i"
-	@echo "... home/wqruan/test_resmlp/EzPC/Athos/densemodel_60_sci_OT0.s"
+	@echo "... mobilemodel_SCI_OT.out"
+	@echo "... resmodel_SCI_OT.out"
+	@echo "... shufflemodel_SCI_OT.out"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.o"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.i"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/densemodel_60_sci_OT0.s"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.o"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.i"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/mobilemodel_60_sci_OT0.s"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.o"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.i"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/resmodel_60_sci_OT0.s"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.o"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.i"
+	@echo "... home/wqruan/EzPC-HawkEye/Athos/shufflemodel_60_sci_OT0.s"
 .PHONY : help
 
 
