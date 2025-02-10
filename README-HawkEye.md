@@ -1,6 +1,6 @@
 # CrypTFlow2 in HawkEye
 
-This README file describes how to reproduce the model communication cost propfiling results from CrypTFlow2 shown in Table 1, Table 3 and Figure 1 of the paper "HawkEye: Statically and Accurately Profiling the Communication Cost of Models in Multi-party Learning" (Usenix Security 2025).
+This README file describes how to reproduce the model communication cost propfiling results from CrypTFlow2 shown in Table 1, Table 3 and Figure 6 of the paper "HawkEye: Statically and Accurately Profiling the Communication Cost of Models in Multi-party Learning" (Usenix Security 2025).
 
 ## Required Packages
  - g++ (version >= 8)
@@ -39,7 +39,7 @@ CMake Error at src/LinearHE/CMakeLists.txt:18 (find_package):
 ```
 
 ## Compile models and run profiling processes
-After runningthe following commands, the end of `log_modelname_server.txt` would contain the communication size, communication round and running time results from CrypTFlow2 shown in Table 1, Table 3 and Figure 1 of the paper "HawkEye: Statically and Accurately Profiling the Communication Cost of Models in Multi-party Learning" (Usenix Security 2025).
+After runningthe following commands, the end of `log_modelname_server.txt` would contain the communication size, communication round and running time results from CrypTFlow2 shown in Table 1, Table 3 and Figure 6 of the paper "HawkEye: Statically and Accurately Profiling the Communication Cost of Models in Multi-party Learning" (Usenix Security 2025).
 ```
 cd EzPC-HawkEye/Athos
 cd build_dir
