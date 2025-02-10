@@ -8,10 +8,10 @@ SEAL
 *.onnx
 .idea/
 .vscode/
-*.sh
+# *.sh
 *.dat
 *.npy
-*.txt
+# *.txt
 *Zone.Identifier
 *.zip
 *.dot

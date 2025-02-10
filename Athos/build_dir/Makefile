@@ -117,19 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named resmodel_SCI_OT.out
-
-# Build rule for target.
-resmodel_SCI_OT.out: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 resmodel_SCI_OT.out
-.PHONY : resmodel_SCI_OT.out
-
-# fast build rule for target.
-resmodel_SCI_OT.out/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/build
-.PHONY : resmodel_SCI_OT.out/fast
-
-#=============================================================================
 # Target rules for targets named densemodel_SCI_OT.out
 
 # Build rule for target.
@@ -141,6 +128,19 @@ densemodel_SCI_OT.out: cmake_check_build_system
 densemodel_SCI_OT.out/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/densemodel_SCI_OT.out.dir/build.make CMakeFiles/densemodel_SCI_OT.out.dir/build
 .PHONY : densemodel_SCI_OT.out/fast
+
+#=============================================================================
+# Target rules for targets named resmodel_SCI_OT.out
+
+# Build rule for target.
+resmodel_SCI_OT.out: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 resmodel_SCI_OT.out
+.PHONY : resmodel_SCI_OT.out
+
+# fast build rule for target.
+resmodel_SCI_OT.out/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/resmodel_SCI_OT.out.dir/build.make CMakeFiles/resmodel_SCI_OT.out.dir/build
+.PHONY : resmodel_SCI_OT.out/fast
 
 #=============================================================================
 # Target rules for targets named shufflemodel_SCI_OT.out
