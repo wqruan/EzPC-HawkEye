@@ -35,7 +35,9 @@ int bitlength = 32, b = 4;
 int batch_size = 0;
 string address = "127.0.0.1";
 int num_threads = 1;
-
+int dim1 = 3;
+int dim2 = 2;
+int dim3 = 1;
 void field_maxpool_thread(int tid, uint64_t *z, uint64_t *x, int lnum_rows,
                           int lnum_cols) {
   MaxPoolProtocol<uint64_t> *maxpool_oracle;
@@ -116,7 +118,15 @@ int main(int argc, char **argv) {
 
   /************** Fork Threads ****************/
   /********************************************/
+  uint64_t *inA = make_array<uint64_t>(dim1 * dim2);
+  uint64_t *inB = make_array<uint64_t>(dim2 * dim3);
 
+  // prg.random_data(inA, dim1 * dim2 * sizeof(uint64_t));
+  // prg.random_data(inB, dim2 * dim3 * sizeof(uint64_t));
+  int dim = dim1*dim3;
+  uint64_t *outC = make_array<uint64_t>(dim);
+  MatMul2D(dim1,dim2,dim3,inA,inB,outC,1);
+  cout <<123425 << endl;
   auto start = clock_start();
   std::thread maxpool_threads[num_threads];
   int chunk_size = num_rows / num_threads;

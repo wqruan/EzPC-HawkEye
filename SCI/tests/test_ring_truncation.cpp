@@ -26,8 +26,8 @@ using namespace sci;
 using namespace std;
 
 int dim = 35;//1 << 8;
-int bw = 16;
-int shift = 7;
+int bw = 64;
+int shift = 16;
 
 uint64_t mask_bw = (bw == 64 ? -1 : ((1ULL << bw) - 1));
 uint64_t mask_shift = (shift == 64 ? -1 : ((1ULL << shift) - 1));
@@ -166,9 +166,11 @@ int main(int argc, char **argv) {
 
   cout << "<><><><> Truncate & Reduce <><><><>" << endl;
   num_rounds = iopack->get_rounds();
+  uint64_t tmpp = iopack->get_comm();
   trunc_reduce();
   num_rounds = iopack->get_rounds() - num_rounds;
-  cout << "Num rounds (TR): " << num_rounds << endl;
+  tmpp = iopack->get_comm() - tmpp;
+  cout << "Num rounds (TR): " << tmpp << endl;
 
   cout << "<><><><> (Unsigned) Truncate <><><><>" << endl;
   num_rounds = iopack->get_rounds();

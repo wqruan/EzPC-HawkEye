@@ -270,15 +270,28 @@ inline uint64_t all1Mask(int x){
 
 #define INIT_ALL_IO_DATA_SENT uint64_t __ioStartTracker[::num_threads];\
         for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
-            __ioStartTracker[__thrdCtr] = ::ioArr[__thrdCtr]->counter;\
+            __ioStartTracker[__thrdCtr] = ::iopackArr[__thrdCtr]->get_comm();\
         }
 #define FIND_ALL_IO_TILL_NOW(var) uint64_t __curComm = 0;\
         for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
-             __curComm += ((::ioArr[__thrdCtr]->counter) - __ioStartTracker[__thrdCtr]);\
+             __curComm += ((::iopackArr[__thrdCtr]->get_comm()) - __ioStartTracker[__thrdCtr]);\
         }\
         var = __curComm;
 #define RESET_ALL_IO for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
-            __ioStartTracker[__thrdCtr] = ::ioArr[__thrdCtr]->counter;\
+            __ioStartTracker[__thrdCtr] = ::iopackArr[__thrdCtr]->get_comm();\
+        }
+
+#define INIT_ALL_ROUND uint64_t __ioRoundStartTracker[::num_threads];\
+        for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
+            __ioRoundStartTracker[__thrdCtr] = ::iopackArr[__thrdCtr]->get_rounds();\
+        }
+#define FIND_ALL_ROUND_TILL_NOW(var) uint64_t __curRound = 0;\
+        for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
+             __curRound = max(__curRound, (::iopackArr[__thrdCtr]->get_rounds()) - __ioRoundStartTracker[__thrdCtr]);\
+        }\
+        var = __curRound;
+#define RESET_ALL_ROUND for(int __thrdCtr = 0; __thrdCtr < ::num_threads; __thrdCtr++){\
+            __ioRoundStartTracker[__thrdCtr] = ::iopackArr[__thrdCtr]->get_rounds();\
         }
 
 inline void print128_num(__m128i var) 

@@ -301,6 +301,7 @@ def generate_code(params, role, debug=False):
             src_file=output_file,
             backend=backend.upper(),
         )
+        print(cmake_file)
         with open("CMakeLists.txt", "w") as f:
             f.write(cmake_file)
 
@@ -317,7 +318,7 @@ def generate_code(params, role, debug=False):
                 )
             )
             os.chdir("..")
-            os.system("rm -r {build_dir}".format(build_dir=build_dir))
+            # os.system("rm -r {build_dir}".format(build_dir=build_dir))
         else:
             print(
                 "Not compiling generated code. Please follow the readme and build and install SCI."

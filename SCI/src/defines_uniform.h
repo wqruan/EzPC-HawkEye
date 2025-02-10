@@ -40,7 +40,7 @@ extern uint64_t prime_mod;
 // throughout code
 // Defining this will disable all asserts throughout code
 // #define USE_LINEAR_UNIFORM
-#define TRAINING
+// #define TRAINING
 #ifdef TRAINING
 #undef USE_LINEAR_UNIFORM // Linear Uniform only for inference
 #endif

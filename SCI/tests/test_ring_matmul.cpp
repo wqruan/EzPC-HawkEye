@@ -31,13 +31,12 @@ string address = "127.0.0.1";
 IOPack *iopack;
 OTPack *otpack;
 LinearOT *prod;
-
-int dim1 = 1;
-int dim2 = 100;
-int dim3 = 35;
-int bwA = 8;
-int bwB = 8;
-int bwC = bwA + bwB;
+int dim1 = 3;
+int dim2 = 16;
+int dim3 = 1;
+int bwA = 16;
+int bwB = 16;
+int bwC = bwA ;
 bool signed_B = true;
 bool accumulate = true;
 bool precomputed_MSBs = false;
@@ -166,7 +165,6 @@ int main(int argc, char **argv) {
   iopack = new IOPack(party, port, "127.0.0.1");
   otpack = new OTPack(iopack, party);
   prod = new LinearOT(party, iopack, otpack);
-
   PRG128 prg; //(fix_key);
 
   uint64_t *inA = new uint64_t[dim1 * dim2];
@@ -184,26 +182,26 @@ int main(int argc, char **argv) {
 
   cout << "Precomputed MSBs: " << precomputed_MSBs << endl;
   cout << "Accumulate: " << ::accumulate << endl;
-  mode = MultMode::None;
-  cout << "Mode: None" << endl;
-  test_matrix_multiplication(inA, inB, false);
-  test_matrix_multiplication(inA, inB, true);
+  // mode = MultMode::None;
+  // cout << "Mode: None" << endl;
+  // test_matrix_multiplication(inA, inB, false);
+  // test_matrix_multiplication(inA, inB, true);
   mode = MultMode::Alice_has_A;
   cout << "Mode: Alice_has_A" << endl;
   test_matrix_multiplication(inA, inB, false);
   test_matrix_multiplication(inA, inB, true);
-  mode = MultMode::Alice_has_B;
-  cout << "Mode: Alice_has_B" << endl;
-  test_matrix_multiplication(inA, inB, false);
-  test_matrix_multiplication(inA, inB, true);
-  mode = MultMode::Bob_has_A;
-  cout << "Mode: Bob_has_A" << endl;
-  test_matrix_multiplication(inA, inB, false);
-  test_matrix_multiplication(inA, inB, true);
-  mode = MultMode::Bob_has_B;
-  cout << "Mode: Bob_has_B" << endl;
-  test_matrix_multiplication(inA, inB, false);
-  test_matrix_multiplication(inA, inB, true);
+  // mode = MultMode::Alice_has_B;
+  // cout << "Mode: Alice_has_B" << endl;
+  // test_matrix_multiplication(inA, inB, false);
+  // test_matrix_multiplication(inA, inB, true);
+  // mode = MultMode::Bob_has_A;
+  // cout << "Mode: Bob_has_A" << endl;
+  // test_matrix_multiplication(inA, inB, false);
+  // test_matrix_multiplication(inA, inB, true);
+  // mode = MultMode::Bob_has_B;
+  // cout << "Mode: Bob_has_B" << endl;
+  // test_matrix_multiplication(inA, inB, false);
+  // test_matrix_multiplication(inA, inB, true);
 
   delete[] inA;
   delete[] inB;

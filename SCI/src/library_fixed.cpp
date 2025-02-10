@@ -177,6 +177,38 @@ void finalize() {
   std::cout << "ArgMax data sent = "
             << ((ArgMaxCommSent) / (1.0 * (1ULL << 20))) << " MiB."
             << std::endl;
+  std::cout << "MatAdd round = "
+            << (MatAddRound)  
+            << std::endl;
+  std::cout << "BatchNorm round = "
+            << (BatchNormRound)  
+            << std::endl;
+  std::cout << "MatMul round = "
+            << (MatMulRound)  
+            << std::endl;
+  std::cout << "Conv round = " << (ConvRound) 
+           << std::endl;
+  std::cout << "ReLU round = " << (ReluRound) 
+           << std::endl;
+  std::cout << "MatAddBroadCast round = "
+            << (MatAddBroadCastRound)  
+            << std::endl;
+  std::cout << "MulCir round = "
+            << (MulCirRound) 
+            << std::endl;
+  std::cout << "Sigmoid round = "
+            << (SigmoidRound) 
+            << std::endl;
+  std::cout << "Tanh round = " << (TanhRound)
+            << std::endl;
+  std::cout << "Sqrt round = " << (SqrtRound) 
+            << std::endl;
+  std::cout << "NormaliseL2 round = "
+            << (NormaliseL2Round)  
+            << std::endl;
+  std::cout << "ArgMax round = "
+            << (ArgMaxRound)  
+            << std::endl;
   std::cout << "------------------------------------------------------\n";
 
   if (party == SERVER) {
@@ -341,6 +373,7 @@ void AdjustScaleShr(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   int32_t dim = I * J;
@@ -358,6 +391,10 @@ void AdjustScaleShr(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
   std::cout << "Time in sec for current AdjustScaleShr = " << (temp / 1000.0)
             << std::endl;
   MatAddCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MatAdd round:" << curRound << std::endl;
+  MatAddRound +=curRound;
 #endif
 }
 
@@ -367,6 +404,7 @@ void MatAdd(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   assert(bwTemp <= 64);
   assert(bwA <= bwTemp);
@@ -415,6 +453,10 @@ void MatAdd(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
     std::cout << "Time in sec for current MatAdd = " << (temp / 1000.0)
               << std::endl;
     MatAddCommSent += curComm;
+    uint64_t curRound;
+    FIND_ALL_ROUND_TILL_NOW(curRound)
+    std::cout << "MatAdd round:" << curRound << std::endl;
+    MatAddRound +=curRound;
   }
 #endif
 }
@@ -426,6 +468,7 @@ void MatAddBroadCast(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   int32_t dim = I * J;
 
@@ -470,6 +513,10 @@ void MatAddBroadCast(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   MatAddBroadCastCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MatAddBroadCast round:" << curRound << std::endl;
+  MatAddBroadCastRound +=curRound;
 #endif
 }
 
@@ -480,6 +527,7 @@ void AddOrSubCir(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   int32_t dim = I * J;
 
@@ -513,6 +561,10 @@ void AddOrSubCir(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   MatAddCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MatAdd round:" << curRound << std::endl;
+  MatAddRound +=curRound;
 #endif
 }
 
@@ -522,6 +574,7 @@ void ScalarMul(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   int32_t shift = shrA + shrB + demote;
 
@@ -555,6 +608,10 @@ void ScalarMul(uint64_t *A, uint64_t *B, uint64_t *C, int32_t I, int32_t J,
   std::cout << "Time in sec for current ScalarMul = " << (temp / 1000.0)
             << std::endl;
   ScalarMulCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "ScalarMul round:" << curRound << std::endl;
+  ScalarMulRound +=curRound;
 #endif
 }
 
@@ -589,6 +646,7 @@ void MulCir(int64_t I, int64_t J, int64_t shrA, int64_t shrB, int64_t demote,
   std::cout << ctr++ << ". MulCir (" << I << " x " << J << ")" << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   int32_t shiftA = log2(shrA);
@@ -620,6 +678,10 @@ void MulCir(int64_t I, int64_t J, int64_t shrA, int64_t shrB, int64_t demote,
   std::cout << "Time in sec for current MulCir = " << (temp / 1000.0)
             << std::endl;
   MulCirCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MulCir round:" << curRound << std::endl;
+  MulCirRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -701,6 +763,7 @@ void MatMul(int64_t I, int64_t K, int64_t J, int64_t shrA, int64_t shrB,
               << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   if (party == CLIENT) {
     for (int i = 0; i < K * J; i++) {
@@ -749,6 +812,10 @@ void MatMul(int64_t I, int64_t K, int64_t J, int64_t shrA, int64_t shrB,
   MatMulTimeInMilliSec += temp;
   std::cout << "Time in sec for current MatMul = " << (temp / 1000.0)
             << std::endl;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MatMul round:" << curRound << std::endl;
+  MatMulRound +=curRound;
 #endif
 }
 
@@ -841,6 +908,7 @@ void Sigmoid(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   std::cout << ctr++ << ". Sigmoid (" << I << " x " << J << ")" << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   int32_t s_A = log2(scale_in);
   int32_t s_B = log2(scale_out);
@@ -869,6 +937,10 @@ void Sigmoid(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   SigmoidCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Sigmoid round:" << curRound << std::endl;
+  SigmoidRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -914,6 +986,7 @@ void TanH(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   std::cout << ctr++ << ". TanH (" << I << " x " << J << ")" << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   int32_t s_A = log2(scale_in);
@@ -942,6 +1015,10 @@ void TanH(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   TanhCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Tanh round:" << curRound << std::endl;
+  TanhRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -985,6 +1062,7 @@ void Sqrt(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   std::cout << ctr++ << ". Sqrt (" << I << " x " << J << ")" << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   int32_t s_A = log2(scale_in);
@@ -1013,6 +1091,10 @@ void Sqrt(int64_t I, int64_t J, int64_t scale_in, int64_t scale_out,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   SqrtCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Sqrt round:" << curRound << std::endl;
+  SqrtRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -1058,6 +1140,7 @@ void ArgMax(uint64_t *A, int32_t I, int32_t J, int32_t bwA, int32_t bw_index,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   argmax = new ArgMaxProtocol<uint64_t>(party, RING, iopack, bwA, MILL_PARAM,
                                                0, otpack);
@@ -1077,6 +1160,10 @@ void ArgMax(uint64_t *A, int32_t I, int32_t J, int32_t bwA, int32_t bw_index,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   ArgMaxCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "ArgMax round:" << curRound << std::endl;
+  ArgMaxRound +=curRound;
 #endif
 }
 
@@ -1085,6 +1172,7 @@ void MaxPool2D(uint64_t *A, int32_t I, int32_t J, int32_t bwA, int32_t bwB,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   maxpool = new MaxPoolProtocol<uint64_t>(party, RING, iopack, bwA,
@@ -1107,6 +1195,10 @@ void MaxPool2D(uint64_t *A, int32_t I, int32_t J, int32_t bwA, int32_t bwB,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   MaxpoolCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MaxPool round:" << curRound << std::endl;
+  MaxpoolRound +=curRound;
 #endif
 }
 
@@ -1185,6 +1277,7 @@ void Convolution(int32_t N, int32_t H, int32_t W, int32_t CIN, int32_t HF,
             << std::endl;
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   if (party == CLIENT) {
@@ -1269,6 +1362,10 @@ void Convolution(int32_t N, int32_t H, int32_t W, int32_t CIN, int32_t HF,
   ConvTimeInMilliSec += temp;
   std::cout << "Time in sec for current Conv = " << (temp / 1000.0)
             << std::endl;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Conv round:" << curRound << std::endl;
+  ConvRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -1315,6 +1412,7 @@ void ReLU(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
 
   assert(bwA >= bwB);
@@ -1346,6 +1444,12 @@ void ReLU(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   ReluCommSent += curComm;
+  uint64_t curRound;
+  std::cout << "ReLU comm:" << curComm << std::endl;
+
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "ReLU round:" << curRound << std::endl;
+  ReluRound +=curRound;
 #endif
 }
 
@@ -1355,6 +1459,7 @@ void BNorm(uint64_t *A, uint64_t *BNW, uint64_t *BNB, uint64_t *B, int32_t I,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   uint64_t maskTemp = (bwTemp == 64 ? -1 : ((1ULL << bwTemp) - 1));
 
@@ -1424,6 +1529,10 @@ void BNorm(uint64_t *A, uint64_t *BNW, uint64_t *BNB, uint64_t *B, int32_t I,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   BatchNormCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "BatchNorm round:" << curRound << std::endl;
+  BatchNormRound +=curRound;
 #endif
 }
 
@@ -1432,6 +1541,7 @@ void NormaliseL2(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
 #ifdef LOG_LAYERWISE
   INIT_TIMER;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
 #endif
   int32_t scale_in = -1 * scaleA;
   int32_t scale_out = -1 * (scaleA + 1);
@@ -1485,6 +1595,10 @@ void NormaliseL2(uint64_t *A, uint64_t *B, int32_t I, int32_t J, int32_t bwA,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   NormaliseL2CommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "MulCir round:" << curRound << std::endl;
+  NormaliseL2Round +=curRound;
 #endif
 }
 

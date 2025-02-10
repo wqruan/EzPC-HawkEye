@@ -1260,7 +1260,7 @@ class ONNXNodesAST:
         options[AST.PaddingKeysDict.strideW] = stridesUsed[1]
         options[AST.PaddingKeysDict.ConvDim] = 2
         options[AST.PaddingKeysDict.group] = group
-
+        print(inputShape)
         # print(inputShape, filterShape)
         assert inputShape[1] == filterShape[1] * group
         # For Input:

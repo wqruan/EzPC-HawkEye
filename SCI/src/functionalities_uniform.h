@@ -255,6 +255,7 @@ void funcMatmulThread(int tid, int N, int s1, int s2, int s3, intType *A,
   */
 
 #ifdef USE_LINEAR_UNIFORM
+ std::cout << "train" << std::endl;
   assert(s2EndIdx > s2StartIdx);
   bool useBobAsSender = tid & 1;
   if (partyWithAInAB_mul == sci::BOB)
@@ -281,14 +282,19 @@ void funcMatmulThread(int tid, int N, int s1, int s2, int s3, intType *A,
 #else  // USE_LINEAR_UNIFORM
   MultMode mode;
 #ifdef TRAINING
+  std::cout << "train" << std::endl;
   mode = MultMode::None;
 #else
+  std::cout << "inference" << std::endl;
   if (tid & 1) {
+    std::cout << "bob has a" << std::endl;
     if (partyWithAInAB_mul == sci::ALICE)
       mode = MultMode::Bob_has_A;
     else
       mode = MultMode::Bob_has_B;
   } else {
+    std::cout << "alice has a" << std::endl;
+
     if (partyWithAInAB_mul == sci::ALICE)
       mode = MultMode::Alice_has_A;
     else

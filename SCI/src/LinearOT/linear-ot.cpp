@@ -192,6 +192,7 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
   // A whole row of values is multiplied to a element using only bwR OTs
   bool row_batching;
   if (mode == MultMode::Alice_has_A) {
+    std::cout << "alice has Aaaa" << std::endl;
     use_straight_ot = true;
     row_batching = false;
   } else if (mode == MultMode::Bob_has_A) {
@@ -264,7 +265,9 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
     // inplace transposing is fine because inS is a copy if row_batching = false
     matrix_transpose(inS, dimS1, dimS2);
   }
-
+  std::cout << "num ot:" << num_ot << std::endl;
+  std::cout << "batch_size:" << batch_size << std::endl;
+  std::cout << "bwR:" << bwR << std::endl;
   for (int i = 0; i < num_ot; i += batch_size) {
     vector<int> msg_len;
     if (batch_size <= num_ot - i)
@@ -297,6 +300,8 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
 #pragma omp parallel num_threads(2)
     {
       if (omp_get_thread_num() == 1 && use_reversed_ot) {
+        std::cout << "reverse ot" << std::endl;
+        uint64_t start_comm = iopack->io->counter;
         if (party == sci::ALICE) {
           if (batch_size <= num_ot - i) {
             otpack->iknp_reversed->recv_batched_cot(ABr, choice, msg_len,
@@ -314,8 +319,14 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
                                                     num_ot - i, msgs_per_ot);
           }
         }
+        uint64_t comm_end = iopack->io->counter;
+      cout << "Bytes Sent: " << (comm_end - start_comm) << endl;
       } else if (omp_get_thread_num() == 0 && use_straight_ot) {
+        std::cout << "straight ot" << std::endl;
+
         if (party == sci::ALICE) {
+  uint64_t start_comm = iopack->get_comm();
+
           if (batch_size <= num_ot - i) {
             otpack->iknp_straight->send_batched_cot(ABs, corr, msg_len,
                                                     batch_size, msgs_per_ot);
@@ -323,7 +334,11 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
             otpack->iknp_straight->send_batched_cot(ABs, corr, msg_len,
                                                     num_ot - i, msgs_per_ot);
           }
+          
+  uint64_t comm_end = iopack->get_comm();
+  cout << "Bytes Sent: " << (comm_end - start_comm) << endl;
         } else { // party == sci::BOB
+  uint64_t start_comm = iopack->get_comm();
           if (batch_size <= num_ot - i) {
             otpack->iknp_straight->recv_batched_cot(ABr, choice, msg_len,
                                                     batch_size, msgs_per_ot);
@@ -331,6 +346,8 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
             otpack->iknp_straight->recv_batched_cot(ABr, choice, msg_len,
                                                     num_ot - i, msgs_per_ot);
           }
+  uint64_t comm_end = iopack->get_comm();
+  cout << "Bytes Sent: " << (comm_end - start_comm) << endl;
         }
       }
     }
@@ -365,7 +382,9 @@ void LinearOT::matmul_cross_terms(int32_t dim1, int32_t dim2, int32_t dim3,
           }
         }
       }
+        
     }
+ 
   }
   if (!row_batching) {
     if (accumulate) {
@@ -676,10 +695,13 @@ void LinearOT::matrix_multiplication(int32_t dim1, int32_t dim2, int32_t dim3,
   /* print_vec(this, tmpA, bwA, dim1*dim2); */
   /* print_vec(this, tmpB, bwB, dim2*dim3); */
   uint64_t *cross_terms = new uint64_t[dim];
+                  cout << 1235456 << endl;
+        uint64_t comm_start = iopack->get_comm();
   matmul_cross_terms(dim1, dim2, dim3, tmpA, tmpB, cross_terms, bwA, bwB, bwC,
                      accumulate, mode);
   /* print_vec(this, cross_terms, bwC, dim); */
-
+           uint64_t comm_end = iopack->get_comm();
+       cout << "Bytes Sent: " << (comm_end - comm_start) << endl;
   uint64_t *local_terms = new uint64_t[dim];
   if (party == ALICE &&
       (mode == MultMode::Alice_has_A || mode == MultMode::Alice_has_B)) {
@@ -794,11 +816,13 @@ void LinearOT::matrix_multiplication(int32_t dim1, int32_t dim2, int32_t dim3,
       }
     }
   }
+
   if (accumulate) {
     trunc->truncate_and_reduce(dim1 * dim3, tmpC, outC, extra_bits, bwC);
   } else {
     memcpy(outC, tmpC, dim * sizeof(uint64_t));
   }
+
   /* print_vec(this, outC, bwC, dim); */
 
   delete[] cross_terms;

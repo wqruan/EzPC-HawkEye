@@ -89,6 +89,7 @@ Config file should be a json in the following format:
 }
 """,
     )
+    print(2345235)
     args = parser.parse_args()
     return args
 
@@ -332,7 +333,7 @@ def generate_code(params, role, debug=False):
                     )
                 )
                 os.chdir("..")
-                os.system("rm -r {build_dir}".format(build_dir=build_dir))
+                # os.system("rm -r {build_dir}".format(build_dir=build_dir))
             else:
                 print(
                     "Not compiling generated code. Please follow the readme and build and install SCI."

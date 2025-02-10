@@ -34,8 +34,8 @@ int num_threads = 4;
 string address = "127.0.0.1";
 bool six_comparison = true;
 
-int dim = 35;//1ULL << 16;
-int bw_x = 32;
+int dim = 100000;//1ULL << 16;
+int bw_x = 64;
 int s_x = 28;
 
 uint64_t mask_x = (bw_x == 64 ? -1 : ((1ULL << bw_x) - 1));

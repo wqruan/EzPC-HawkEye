@@ -9,7 +9,7 @@ using namespace std;
 int party = 0;
 int port = 32000;
 string address = "127.0.0.1";
-int num_threads = 4;
+int num_threads = 1;
 int32_t bitlength = 32;
 
 void MatAddBroadCast2(int64_t s1, int64_t s2, uint64_t *A, uint64_t *B,
@@ -2270,7 +2270,7 @@ int main(int argc, char **argv) {
   amap.parse(argc, argv);
 
   assert(party == SERVER || party == CLIENT);
-
+  cout<<124634576245767<<endl;
   uint64_t *tmp0 =
       make_array<uint64_t>((int32_t)1, (int32_t)227, (int32_t)227, (int32_t)3);
   /* Variable to read the clear value corresponding to the input variable tmp0
@@ -2289,6 +2289,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp1 =
       make_array<uint64_t>((int32_t)3, (int32_t)3, (int32_t)3, (int32_t)64);
@@ -2308,6 +2309,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp2 = make_array<uint64_t>((int32_t)64);
   /* Variable to read the clear value corresponding to the input variable tmp2
@@ -2319,6 +2321,7 @@ int main(int argc, char **argv) {
     }
     Arr1DIdxRowM(tmp2, (int32_t)64, i0) = (party == SERVER) ? __tmp_in_tmp2 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp3 =
       make_array<uint64_t>((int32_t)1, (int32_t)1, (int32_t)64, (int32_t)16);
@@ -2338,6 +2341,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp4 = make_array<uint64_t>((int32_t)16);
   /* Variable to read the clear value corresponding to the input variable tmp4
@@ -2349,6 +2353,7 @@ int main(int argc, char **argv) {
     }
     Arr1DIdxRowM(tmp4, (int32_t)16, i0) = (party == SERVER) ? __tmp_in_tmp4 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp5 =
       make_array<uint64_t>((int32_t)1, (int32_t)1, (int32_t)16, (int32_t)64);
@@ -2368,6 +2373,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp6 = make_array<uint64_t>((int32_t)64);
   /* Variable to read the clear value corresponding to the input variable tmp6
@@ -2379,6 +2385,7 @@ int main(int argc, char **argv) {
     }
     Arr1DIdxRowM(tmp6, (int32_t)64, i0) = (party == SERVER) ? __tmp_in_tmp6 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp7 =
       make_array<uint64_t>((int32_t)3, (int32_t)3, (int32_t)16, (int32_t)64);
@@ -2398,6 +2405,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp8 = make_array<uint64_t>((int32_t)64);
   /* Variable to read the clear value corresponding to the input variable tmp8
@@ -2409,6 +2417,7 @@ int main(int argc, char **argv) {
     }
     Arr1DIdxRowM(tmp8, (int32_t)64, i0) = (party == SERVER) ? __tmp_in_tmp8 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp9 =
       make_array<uint64_t>((int32_t)1, (int32_t)1, (int32_t)128, (int32_t)16);
@@ -2428,6 +2437,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp10 = make_array<uint64_t>((int32_t)16);
   /* Variable to read the clear value corresponding to the input variable tmp10
@@ -2440,6 +2450,7 @@ int main(int argc, char **argv) {
     Arr1DIdxRowM(tmp10, (int32_t)16, i0) =
         (party == SERVER) ? __tmp_in_tmp10 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp11 =
       make_array<uint64_t>((int32_t)1, (int32_t)1, (int32_t)16, (int32_t)64);
@@ -2459,6 +2470,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp12 = make_array<uint64_t>((int32_t)64);
   /* Variable to read the clear value corresponding to the input variable tmp12
@@ -2471,6 +2483,7 @@ int main(int argc, char **argv) {
     Arr1DIdxRowM(tmp12, (int32_t)64, i0) =
         (party == SERVER) ? __tmp_in_tmp12 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp13 =
       make_array<uint64_t>((int32_t)3, (int32_t)3, (int32_t)16, (int32_t)64);
@@ -2626,6 +2639,7 @@ int main(int argc, char **argv) {
     Arr1DIdxRowM(tmp22, (int32_t)32, i0) =
         (party == SERVER) ? __tmp_in_tmp22 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp23 =
       make_array<uint64_t>((int32_t)1, (int32_t)1, (int32_t)32, (int32_t)128);
@@ -2936,6 +2950,7 @@ int main(int argc, char **argv) {
     Arr1DIdxRowM(tmp42, (int32_t)256, i0) =
         (party == SERVER) ? __tmp_in_tmp42 : 0;
   }
+  cout<<124634576245767<<endl;
 
   uint64_t *tmp43 =
       make_array<uint64_t>((int32_t)3, (int32_t)3, (int32_t)64, (int32_t)256);
@@ -3093,12 +3108,15 @@ int main(int argc, char **argv) {
         (party == SERVER) ? __tmp_in_tmp52 : 0;
   }
   StartComputation();
-
+  cout << 4645394673967 << endl;
   uint64_t *tmp53 =
       make_array<uint64_t>((int32_t)1, (int32_t)113, (int32_t)113, (int32_t)64);
+  uint64_t comm_start = iopack->get_comm();
   Conv2DWrapper((int32_t)1, (int32_t)227, (int32_t)227, (int32_t)3, (int32_t)3,
                 (int32_t)3, (int32_t)64, (int32_t)0, (int32_t)0, (int32_t)0,
                 (int32_t)0, (int32_t)2, (int32_t)2, tmp0, tmp1, tmp53);
+  uint64_t comm_end = iopack->get_comm();
+  cout << "Bytes Sent: " << (comm_end - comm_start) << endl;
   ClearMemSecret4((int32_t)3, (int32_t)3, (int32_t)3, (int32_t)64, tmp1);
   ClearMemSecret4((int32_t)1, (int32_t)227, (int32_t)227, (int32_t)3, tmp0);
 
@@ -3120,8 +3138,15 @@ int main(int argc, char **argv) {
 
   uint64_t *tmp61 =
       make_array<uint64_t>((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64);
+ comm_start = iopack->get_comm();
+ uint64_t round_start = iopack->get_rounds();
   Relu4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp59, tmp61,
         (int32_t)9, 1);
+         comm_end = iopack->get_comm();
+ uint64_t round_end = iopack->get_rounds();
+  cout << "Round: " << (round_end - round_start) << endl;
+
+  cout << "Bytes Sent: " << (comm_end - comm_start) << endl;
   ClearMemSecret4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp59);
 
   uint64_t *tmp63 =

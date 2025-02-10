@@ -1,0 +1,10 @@
+{
+  "model_name": "shufflemodel.onnx",
+  "output_tensors": [ "modelOutput" ],
+  "target": "SCI",
+  "backend": "OT",
+  "scale": 23,
+  "bitlength":60,
+  "disable_trunc_opts" : false,
+  "disable_all_hlil_opts" : false
+}

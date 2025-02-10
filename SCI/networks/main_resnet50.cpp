@@ -9,7 +9,7 @@ using namespace std;
 int party = 0;
 int port = 32000;
 string address = "127.0.0.1";
-int num_threads = 4;
+int num_threads = 1;
 int32_t bitlength = 37;
 
 void MatAddBroadCast2(int64_t s1, int64_t s2, uint64_t *A, uint64_t *B,
@@ -1554,7 +1554,7 @@ void FusedBatchNorm4411(int64_t s1, int64_t s2, int64_t s3, int64_t s4,
                         uint64_t *inArr, uint64_t *multArr, uint64_t *biasArr,
                         int64_t multExprScaleDownSf, int64_t biasExprScaleUpSf,
                         uint64_t *outputArr) {
-
+         uint64_t comm_start = iopack->get_comm();  
   int64_t inpSize = (((s1 * s2) * s3) * s4);
 
   uint64_t *inArrReshaped = make_array<uint64_t>(inpSize);
@@ -1608,6 +1608,10 @@ void FusedBatchNorm4411(int64_t s1, int64_t s2, int64_t s3, int64_t s4,
   ClearMemSecret1(inpSize, multArrReshaped);
   ClearMemSecret1(inpSize, multExprAns);
   ClearMemSecret1(s4, biasArrScaledUp);
+  
+  uint64_t comm_end = iopack->get_comm();
+
+  cout << "Bytes Sent: " << (comm_end - comm_start) << endl;
 }
 
 void FusedBatchNorm5511(int64_t s1, int64_t s2, int64_t s3, int64_t s4,
@@ -1957,7 +1961,7 @@ void Relu2(int64_t s1, int64_t s2, uint64_t *inArr, uint64_t *outArr,
 
 void Relu4(int64_t s1, int64_t s2, int64_t s3, int64_t s4, uint64_t *inArr,
            uint64_t *outArr, int64_t sf, uint64_t doTruncation) {
-
+ uint64_t comm_start = iopack->get_comm();
   int64_t size = (((s1 * s2) * s3) * s4);
 
   uint64_t *reshapedInArr = make_array<uint64_t>(size);
@@ -1992,6 +1996,9 @@ void Relu4(int64_t s1, int64_t s2, int64_t s3, int64_t s4, uint64_t *inArr,
   }
   ClearMemSecret1(size, reshapedInArr);
   ClearMemSecret1(size, reshapedOutArr);
+  uint64_t comm_end = iopack->get_comm();
+
+  cout << "Bytes Sent: " << (comm_end - comm_start) << endl;
 }
 
 void Relu5(int64_t s1, int64_t s2, int64_t s3, int64_t s4, int64_t s5,
@@ -2270,6 +2277,7 @@ int main(int argc, char **argv) {
   amap.parse(argc, argv);
 
   assert(party == SERVER || party == CLIENT);
+  cout << 2336534674567 <<endl;
 
   uint64_t *tmp0 =
       make_array<uint64_t>((int32_t)1, (int32_t)224, (int32_t)224, (int32_t)3);
@@ -3420,6 +3428,7 @@ int main(int argc, char **argv) {
       }
     }
   }
+  cout << 2336534674567 <<endl;
 
   uint64_t *tmp84 = make_array<uint64_t>((int32_t)128);
   /* Variable to read the clear value corresponding to the input variable tmp84
@@ -5711,7 +5720,7 @@ int main(int argc, char **argv) {
         (party == SERVER) ? __tmp_in_tmp251 : 0;
   }
   StartComputation();
-
+  cout << 2336534674567 <<endl;
   int64_t *tmp252 = make_array<int64_t>((int32_t)4, (int32_t)2);
   Arr2DIdxRowM(tmp252, (int32_t)4, (int32_t)2, (int64_t)0, (int64_t)0) =
       (int32_t)0;
@@ -5758,23 +5767,32 @@ int main(int argc, char **argv) {
       make_array<uint64_t>((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64);
   ScaleDown4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp259,
              (int32_t)12);
+    
   FusedBatchNorm4411((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp259,
                      tmp2, tmp3, (int32_t)0, (int32_t)12, tmp261);
+                     iopack->get_comm();
   ClearMemSecret1((int32_t)64, tmp3);
   ClearMemSecret4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp259);
   ClearMemSecret1((int32_t)64, tmp2);
 
   uint64_t *tmp265 =
       make_array<uint64_t>((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64);
+ 
+ 
   Relu4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp261, tmp265,
         (int32_t)12, 1);
+  
   ClearMemSecret4((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, tmp261);
 
   uint64_t *tmp267 =
       make_array<uint64_t>((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)256);
+
+
   Conv2DWrapper((int32_t)1, (int32_t)56, (int32_t)56, (int32_t)64, (int32_t)1,
                 (int32_t)1, (int32_t)256, (int32_t)0, (int32_t)0, (int32_t)0,
                 (int32_t)0, (int32_t)1, (int32_t)1, tmp265, tmp6, tmp267);
+ 
+  
   ClearMemSecret4((int32_t)1, (int32_t)1, (int32_t)64, (int32_t)256, tmp6);
 
   uint64_t *tmp269 =

@@ -54,7 +54,10 @@ using namespace std;
 void MatMul2D(int32_t s1, int32_t s2, int32_t s3, const intType *A,
               const intType *B, intType *C, bool modelIsA) {
 #ifdef LOG_LAYERWISE
+  std::cout << "matmul log" << std::endl;
+
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
 
@@ -70,7 +73,6 @@ void MatMul2D(int32_t s1, int32_t s2, int32_t s3, const intType *A,
     partyWithAInAB_mul = sci::BOB;
     partyWithBInAB_mul = sci::ALICE;
   }
-
 #if defined(SCI_OT)
 #ifndef MULTITHREADED_MATMUL
 #ifdef USE_LINEAR_UNIFORM
@@ -89,14 +91,14 @@ void MatMul2D(int32_t s1, int32_t s2, int32_t s3, const intType *A,
   }
 #else  // USE_LINEAR_UNIFORM
 #ifdef TRAINING
-  mult->matmul_cross_terms(s1, s2, s3, A, B, C, bitlength, bitlength,
+  mult->matmul_cross_terms(s1, s2, s3, (intType*)A, (intType*)B, (intType*)C, bitlength, bitlength,
                            bitlength, true, MultMode::None);
 #else
   if (modelIsA) {
-    mult->matmul_cross_terms(s1, s2, s3, A, B, C, bitlength, bitlength,
+    mult->matmul_cross_terms(s1, s2, s3, (intType*)A, (intType*)B, (intType*)C, bitlength, bitlength,
                              bitlength, true, MultMode::Alice_has_A);
   } else {
-    mult->matmul_cross_terms(s1, s2, s3, A, B, C, bitlength, bitlength,
+    mult->matmul_cross_terms(s1, s2, s3, (intType*)A, (intType*)B, (intType*)C, bitlength, bitlength,
                              bitlength, true, MultMode::Alice_has_B);
   }
 #endif
@@ -111,7 +113,7 @@ void MatMul2D(int32_t s1, int32_t s2, int32_t s3, const intType *A,
 #ifdef USE_LINEAR_UNIFORM
     multUniform->ideal_func(s1, s2, s3, A, B, CTemp);
 #else  // USE_LINEAR_UNIFORM
-    mult->matmul_cleartext(s1, s2, s3, A, B, CTemp, true);
+    mult->matmul_cleartext(s1, s2, s3, (intType*)A, (intType*)B, CTemp, true);
 #endif // USE_LINEAR_UNIFORM
     sci::elemWiseAdd<intType>(s1 * s3, C, CTemp, C);
     delete[] CTemp;
@@ -218,6 +220,13 @@ void MatMul2D(int32_t s1, int32_t s2, int32_t s3, const intType *A,
             << std::endl;
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "matmul round:" << curRound << std::endl;
+  MatMulRound +=curRound;
+  std::cout << "matmul:" << curComm << std::endl;
+
+
   MatMulCommSent += curComm;
 #endif
 
@@ -329,6 +338,8 @@ void Conv2DWrapper(signedIntType N, signedIntType H, signedIntType W,
                    intType *outArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
+
   INIT_TIMER;
 #endif
 
@@ -340,7 +351,6 @@ void Conv2DWrapper(signedIntType N, signedIntType H, signedIntType W,
 
   signedIntType newH = (((H + (zPadHLeft + zPadHRight) - FH) / strideH) + 1);
   signedIntType newW = (((W + (zPadWLeft + zPadWRight) - FW) / strideW) + 1);
-
 #ifdef SCI_OT
   // If its a ring, then its a OT based -- use the default Conv2DCSF
   // implementation that comes from the EzPC library
@@ -410,6 +420,10 @@ void Conv2DWrapper(signedIntType N, signedIntType H, signedIntType W,
             << std::endl;
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "matmul conv round:" << curRound << std::endl;
+  ConvRound +=curRound;
   ConvCommSent += curComm;
 #endif
 
@@ -520,7 +534,9 @@ void Conv2DGroupWrapper(signedIntType N, signedIntType H, signedIntType W,
                         intType *inputArr, intType *filterArr,
                         intType *outArr) {
 #ifdef LOG_LAYERWISE
+  std::cout << "conv log" << std::endl;
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
 
@@ -544,7 +560,6 @@ void Conv2DGroupWrapper(signedIntType N, signedIntType H, signedIntType W,
   else
     assert(false && "Grouped conv not implemented in HE");
 #endif
-
 #ifdef LOG_LAYERWISE
   auto temp = TIMER_TILL_NOW;
   ConvTimeInMilliSec += temp;
@@ -552,7 +567,12 @@ void Conv2DGroupWrapper(signedIntType N, signedIntType H, signedIntType W,
             << std::endl;
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
+  std::cout << "curr conv:" << curComm << std::endl;
   ConvCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "matmul conv round:" << curRound << std::endl;
+  ConvRound +=curRound;
 #endif
 }
 
@@ -602,6 +622,8 @@ void ConvTranspose2DWrapper(int32_t N, int32_t HPrime, int32_t WPrime,
                                uint64_t* outArr){
   #ifdef LOG_LAYERWISE
     INIT_ALL_IO_DATA_SENT;
+    INIT_ALL_ROUND;
+
     INIT_TIMER;
   #endif
 
@@ -635,6 +657,10 @@ void ConvTranspose2DWrapper(int32_t N, int32_t HPrime, int32_t WPrime,
     uint64_t curComm;
     FIND_ALL_IO_TILL_NOW(curComm);
     ConvCommSent += curComm;
+    uint64_t curRound;
+    FIND_ALL_ROUND_TILL_NOW(curRound)
+    std::cout << "matmul conv round:" << curRound << std::endl;
+    ConvRound +=curRound;
   #endif
 
 }
@@ -643,9 +669,12 @@ void ElemWiseActModelVectorMult(int32_t size, intType *inArr,
                                 intType *multArrVec, intType *outputArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
+
   INIT_TIMER;
 #endif
-
+  std::cout << "batchnorm start" << std::endl;
+  std::cout << "size:" << size << std::endl;
   if (party == CLIENT) {
     for (int i = 0; i < size; i++) {
       assert((multArrVec[i] == 0) &&
@@ -732,7 +761,13 @@ void ElemWiseActModelVectorMult(int32_t size, intType *inArr,
   BatchNormInMilliSec += temp;
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
+  std::cout << "batch comm:" << curComm << std::endl;
+
   BatchNormCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "BatchNorm round:" << curRound << std::endl;
+  BatchNormRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -787,6 +822,8 @@ void ElemWiseActModelVectorMult(int32_t size, intType *inArr,
 void ArgMax(int32_t s1, int32_t s2, intType *inArr, intType *outArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
+
   INIT_TIMER;
 #endif
 
@@ -804,6 +841,10 @@ void ArgMax(int32_t s1, int32_t s2, intType *inArr, intType *outArr) {
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   ArgMaxCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "ArgMax round:" << curRound << std::endl;
+  ArgMaxRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -931,6 +972,7 @@ void HardSigmoid(int32_t size, intType *inArr, intType *outArr, int32_t sf, bool
   Min(size, tmpIn1, (int32_t)1, tmpIn1, sf, doTruncation) ;
   Max(size, tmpIn1, (int32_t)0, outArr, sf, doTruncation) ;
 
+
   delete[] tmpIn ;
   delete[] tmpIn1 ;
 }
@@ -939,6 +981,8 @@ void Relu(int32_t size, intType *inArr, intType *outArr, int sf,
           bool doTruncation) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
+
   INIT_TIMER;
 #endif
 
@@ -979,12 +1023,22 @@ void Relu(int32_t size, intType *inArr, intType *outArr, int sf,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   ReluCommSent += curComm;
+  uint64_t curRound;
+  std::cout << "ReLU comm:" << curComm << std::endl;
+
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "ReLU round:" << curRound << std::endl;
+  ReluRound +=curRound;
 #endif
 
   if (doTruncation) {
 #ifdef LOG_LAYERWISE
     INIT_ALL_IO_DATA_SENT;
+    INIT_ALL_ROUND;
+
     INIT_TIMER;
+  std::cout << "truncate start" << std::endl;
+  std::cout << "size:" << size << std::endl;
 #endif
     for (int i = 0; i < size; i++) {
       msbShare[i] = 0; // After relu, all numbers are +ve
@@ -1004,7 +1058,13 @@ void Relu(int32_t size, intType *inArr, intType *outArr, int sf,
     TruncationTimeInMilliSec += temp;
     uint64_t curComm;
     FIND_ALL_IO_TILL_NOW(curComm);
+    std::cout << "trunc comm:" << curComm << std::endl;
+
     TruncationCommSent += curComm;
+    uint64_t curRound;
+    FIND_ALL_ROUND_TILL_NOW(curRound)
+    std::cout << "Trunc round:" << curRound << std::endl;
+    TruncationRound +=curRound;
 #endif
   } else {
     for (int i = 0; i < size; i++) {
@@ -1093,6 +1153,7 @@ void MaxPool(int32_t N, int32_t H, int32_t W, int32_t C, int32_t ksizeH,
              int32_t C1, intType *inArr, intType *outArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
 
@@ -1194,6 +1255,10 @@ void MaxPool(int32_t N, int32_t H, int32_t W, int32_t C, int32_t ksizeH,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   MaxpoolCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Maxpool round:" << curRound << std::endl;
+  MaxpoolRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -1276,6 +1341,7 @@ void AvgPool(int32_t N, int32_t H, int32_t W, int32_t C, int32_t ksizeH,
              int32_t C1, intType *inArr, intType *outArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
 
@@ -1372,6 +1438,10 @@ void AvgPool(int32_t N, int32_t H, int32_t W, int32_t C, int32_t ksizeH,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   AvgpoolCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "AvgPool round:" << curRound << std::endl;
+  AvgpoolRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -1448,6 +1518,7 @@ void AvgPool(int32_t N, int32_t H, int32_t W, int32_t C, int32_t ksizeH,
 void ScaleDown(int32_t size, intType *inArr, int32_t sf) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
 
@@ -1458,6 +1529,9 @@ void ScaleDown(int32_t size, intType *inArr, int32_t sf) {
   for (int i = 0; i < size; i++) {
     inArr[i] = inArr[i] & moduloMask;
   }
+  std::cout << "truncate start" << std::endl;
+  std::cout << "size:" << size << std::endl;
+
   truncation->truncate(size, inArr, outp, sf, bitlength, true);
 #else
   for (int i = 0; i < size; i++) {
@@ -1471,7 +1545,13 @@ void ScaleDown(int32_t size, intType *inArr, int32_t sf) {
   TruncationTimeInMilliSec += temp;
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
+  std::cout << "trunc comm:" << curComm << std::endl;
+  
   TruncationCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "Truncation round:" << curRound << std::endl;
+  TruncationRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE
@@ -1797,6 +1877,47 @@ void EndComputation() {
   std::cout << "NormaliseL2 data sent = "
             << ((NormaliseL2CommSent) / (1.0 * (1ULL << 20))) << " MiB."
             << std::endl;
+  std::cout << "Truncation Round = "
+            << ((TruncationRound) ) 
+            << std::endl;
+  std::cout << "Maxpool round = "
+            << (MaxpoolRound) 
+            << std::endl;
+  std::cout << "Avgpool round = "
+            << (AvgpoolRound) 
+            << std::endl;
+  std::cout << "MatAdd round = "
+            << (MatAddRound)  
+            << std::endl;
+  std::cout << "BatchNorm round = "
+            << (BatchNormRound)  
+            << std::endl;
+  std::cout << "MatMul round = "
+            << (MatMulRound)  
+            << std::endl;
+  std::cout << "Conv round = " << (ConvRound) 
+           << std::endl;
+  std::cout << "ReLU round = " << (ReluRound) 
+           << std::endl;
+  std::cout << "MatAddBroadCast round = "
+            << (MatAddBroadCastRound)  
+            << std::endl;
+  std::cout << "MulCir round = "
+            << (MulCirRound) 
+            << std::endl;
+  std::cout << "Sigmoid round = "
+            << (SigmoidRound) 
+            << std::endl;
+  std::cout << "Tanh round = " << (TanhRound)
+            << std::endl;
+  std::cout << "Sqrt round = " << (SqrtRound) 
+            << std::endl;
+  std::cout << "NormaliseL2 round = "
+            << (NormaliseL2Round)  
+            << std::endl;
+  std::cout << "ArgMax round = "
+            << (ArgMaxRound)  
+            << std::endl;
   std::cout << "------------------------------------------------------\n";
   if (party == SERVER) {
     uint64_t ConvCommSentClient = 0;
@@ -2000,6 +2121,7 @@ void ElemWiseSecretSharedVectorMult(int32_t size, intType *inArr,
                                     intType *multArrVec, intType *outputArr) {
 #ifdef LOG_LAYERWISE
   INIT_ALL_IO_DATA_SENT;
+  INIT_ALL_ROUND;
   INIT_TIMER;
 #endif
   static int batchNormCtr = 1;
@@ -2041,6 +2163,10 @@ void ElemWiseSecretSharedVectorMult(int32_t size, intType *inArr,
   uint64_t curComm;
   FIND_ALL_IO_TILL_NOW(curComm);
   BatchNormCommSent += curComm;
+  uint64_t curRound;
+  FIND_ALL_ROUND_TILL_NOW(curRound)
+  std::cout << "BatchNorm round:" << curRound << std::endl;
+  BatchNormRound +=curRound;
 #endif
 
 #ifdef VERIFY_LAYERWISE

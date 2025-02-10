@@ -135,6 +135,23 @@ extern uint64_t TanhCommSent;
 extern uint64_t SqrtCommSent;
 extern uint64_t NormaliseL2CommSent;
 extern uint64_t ArgMaxCommSent;
+
+extern uint64_t ConvRound;
+extern uint64_t MatAddRound;
+extern uint64_t BatchNormRound;
+extern uint64_t TruncationRound;
+extern uint64_t ReluRound;
+extern uint64_t MaxpoolRound;
+extern uint64_t AvgpoolRound;
+extern uint64_t MatMulRound;
+extern uint64_t MatAddBroadCastRound;
+extern uint64_t MulCirRound;
+extern uint64_t ScalarMulRound;
+extern uint64_t SigmoidRound;
+extern uint64_t TanhRound;
+extern uint64_t SqrtRound;
+extern uint64_t NormaliseL2Round;
+extern uint64_t ArgMaxRound;
 #endif
 
 #endif // GLOBALS_H__

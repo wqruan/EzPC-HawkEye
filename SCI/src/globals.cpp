@@ -108,4 +108,22 @@ uint64_t TanhCommSent = 0;
 uint64_t SqrtCommSent = 0;
 uint64_t NormaliseL2CommSent = 0;
 uint64_t ArgMaxCommSent = 0;
+
+uint64_t ConvRound = 0;
+uint64_t MatAddRound = 0;
+uint64_t BatchNormRound = 0;
+uint64_t TruncationRound = 0;
+uint64_t ReluRound = 0;
+uint64_t MaxpoolRound = 0;
+uint64_t AvgpoolRound = 0;
+uint64_t MatMulRound = 0;
+uint64_t MatAddBroadCastRound = 0;
+uint64_t MulCirRound = 0;
+uint64_t ScalarMulRound = 0;
+uint64_t SigmoidRound = 0;
+uint64_t TanhRound = 0;
+uint64_t SqrtRound = 0;
+uint64_t NormaliseL2Round = 0;
+uint64_t ArgMaxRound = 0;
+
 #endif
